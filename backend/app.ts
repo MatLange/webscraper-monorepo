@@ -3,11 +3,19 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser'; 
 import logger from 'morgan'; 
-
+import cors from 'cors';  
 import { indexRouter } from './routes/index';
 import { usersRouter } from './routes/users';
 
 const app = express();
+
+// Use the CORS middleware
+const corsOptions = {
+  origin: 'http://localhost:5173', // Allow only this origin
+  optionsSuccessStatus: 200 // Some legacy browsers choke on 204
+};
+
+app.use(cors(corsOptions));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

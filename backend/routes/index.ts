@@ -44,12 +44,11 @@ async function resetData() {
   }
 }
 
-async function insertData(datasets: { [key: string]: JobItem[] }) {
+async function insertData(datasets: any[]) {
   try {
     // Filter and map data to match the schema
-    const flattenedData = Object.values(datasets).flat() || [];
     const mappedData: Database["public"]["Tables"]["websitedata"]["Insert"][] =
-      flattenedData.map((item: any) => ({
+      datasets.map((item: any) => ({
         baseurl: item.baseUrl,
         //created_at: item.created_at,
         duration: item.duration,
@@ -84,7 +83,9 @@ router.get(
     (async () => {
       try {
         const websites = (await readData()) || [];
-        await scrapeWebsites(websites, req, res, next);
+        const data = await scrapeWebsites(websites, req, res, next);
+        res.json({ message: "Data fetched successfully", data: data });
+
       } catch (err) {
         console.error("Error fetching data:", err);
         // Handle the error appropriately, e.g., send an error response
@@ -172,11 +173,14 @@ const scrapeWebsites = async function (
   const page: Page = await context.newPage();
 
   const websiteJobItems = await processWebsites(page, websites, req, res, next);
+  const flattenedData = Object.values(websiteJobItems).flat() || [];
+
   await resetData();
-  await insertData(websiteJobItems);
+  await insertData(flattenedData);
 
   await page.close();
   await browser.close();
+  return flattenedData;
 };
 
 //module.exports = router;

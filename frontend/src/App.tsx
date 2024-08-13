@@ -8,9 +8,17 @@ function App() {
 
   useEffect(() => {
     const getBooks = async () => {
-      const response = await fetch('http://localhost:3000/')
-      const data = await response.json()
-      setBooks(data)
+      try {
+        const response = await fetch('http://localhost:3000/')
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`)
+        }
+        const jsonResponse = await response.json()
+        setBooks(jsonResponse?.data || [])
+      } catch (err) {
+        //setError(err.message)
+        console.error(err);
+      }
     }
     getBooks()
   }, [])
