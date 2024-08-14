@@ -65,7 +65,12 @@ export default App;
 import { useEffect, useState } from 'react'
 //import List from './components/List'
 import type { Book } from './types'
-
+import {
+  ChevronUpDownIcon,
+} from "@heroicons/react/24/outline";
+import {
+  Typography,
+} from "@material-tailwind/react";
 function App() {
   const [books, setBooks] = useState<Book[]>([])
 
@@ -86,6 +91,9 @@ function App() {
     getBooks()
   }, [])
 
+  const TABLE_HEAD = ["No.", "Title", "Location", "Date", "Duration"];
+
+
 /*   return (
     <List books={books} />
   ); */
@@ -95,10 +103,10 @@ function App() {
     <div className="mt-10 flex-col">
     <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 sm:-mx-8">
     <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-    <div className="m-3 overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
+    <div className="m-3 overflow-y-auto h-lvh shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
 
-      <table className=" w-full divide-y divide-gray-300">
-        <thead className="bg-gray-50">
+      <table className="w-full divide-y divide-gray-300">
+{/*         <thead className="bg-gray-50">
         <tr>
           <th scope="col" className="whitespace-normal px-3 py-4 pl-6 text-xl font-semibold text-left">No.</th>
           <th scope="col" className="whitespace-normal hidden md:table-cell p-3 text-xl font-semibold text-left">Title</th>
@@ -107,38 +115,64 @@ function App() {
           <th scope="col" className="whitespace-normal hidden lg:table-cell relative py-3.5 pl-3 pr-6 text-xl font-semibold  text-left">Duration</th> 
  
         </tr>
-        </thead>
+        </thead> */}
+        <thead>
+              <tr className={`flex flex-col sm:table-row sm:mb-0`}>
+                {TABLE_HEAD.map((head, index) => {
+                  const tableHeaderClasses = index < 1
+                  ? "sticky top-0 py-3.5 pl-3 pr-6 text-xl font-semibold text-left cursor-pointer border-y border-blue-gray-100 bg-blue-gray-100 p-4 transition-colors hover:bg-blue-gray-50"
+                  : "hidden lg:table-cell sticky top-0 py-3.5 pl-3 pr-6 text-xl font-semibold text-left cursor-pointer border-y border-blue-gray-100 bg-blue-gray-100 p-4 transition-colors hover:bg-blue-gray-50";
+                  return (
+                  <th
+                    scope="col"
+                    key={head}
+                    className={tableHeaderClasses}
+                  >
+                    <Typography
+                      variant="medium"
+                      color="gray-900"
+                      className="flex items-center justify-between gap-2 font-normal leading-none "
+                    >
+                      {head}{" "}
+                      {index <= TABLE_HEAD.length - 1 && (
+                        <ChevronUpDownIcon strokeWidth={2} className="h-4 w-4" />
+                      )}
+                    </Typography>
+                  </th>
+                ) })}
+              </tr>
+            </thead>        
         <tbody className="divide-y divide-gray-100">
         {books.map(
-                ({ title, url, location, date, duration}, index) => {
+                ({ title, location, date, duration}, index) => {
                   return (          
         <tr key={index} className="bg-white rounded-lg">
-          <td className="w-full sm:w-auto max-w-0 sm:max-w-none whitespace-normal py-4 pl-4  text-xl truncate">
-              <div className="whitespace-normal px-3 py-4 text-xl text-gray-900 truncate">{title}</div>
+          <td className="w-full sm:w-auto max-w-0 sm:max-w-none whitespace-normal py-4 text-lg truncate">
+              <div className="whitespace-normal px-3 py-4 text-lg text-gray-900 truncate">Link</div>
 {/*             <a href="#" className="font-bold text-blue-500 hover:underline">{index}</a>
  */}            <dl className="lg:hidden">
-              <dt className="sr-only md:hidden">Title</dt>
-              <dd className="whitespace-normal md:hidden px-3  text-xl text-gray-500 truncate">{title}</dd>
-              <dt className="sr-only md:hidden">Location</dt>
-              <dd className="whitespace-normal md:hidden px-3  text-xl  text-gray-500 truncate">{location}</dd>
+              <dt className="sr-only lg:hidden">Title</dt>
+              <dd className="whitespace-normal lg:hidden px-3  text-lg text-gray-500 truncate">{title}</dd>
+              <dt className="sr-only lg:hidden">Location</dt>
+              <dd className="whitespace-normal lg:hidden px-3  text-lg  text-gray-500 truncate">{location}</dd>
               <dt className="sr-only lg:hidden">Date</dt>
-              <dd className="whitespace-normal lg:hidden px-3  text-xl text-gray-500 truncate">{date}</dd>
+              <dd className="whitespace-normal lg:hidden px-3  text-lg text-gray-500 truncate">{date}</dd>
               <dt className="sr-only lg:hidden">Duration</dt>
-              <dd className="whitespace-normal lg:hidden px-3 text-xl text-gray-500 truncate">{duration}</dd> 
+              <dd className="whitespace-normal lg:hidden px-3  text-lg text-gray-500 truncate">{duration}</dd> 
             </dl>
           </td>
-{/*           <td className="whitespace-nowrap hidden sm:table-cell px-3 py-4 text-xl text-gray-700 truncate">
+{/*           <td className="whitespace-nowrap hidden sm:table-cell px-3 py-4 text-lg text-gray-700 truncate">
           {title}
           </td> */}
-          <td className="whitespace-normal hidden md:table-cell px-3 py-4 text-xl text-gray-700 truncate">
+          <td className="whitespace-normal hidden lg:table-cell px-3 py-4 text-lg text-gray-700 truncate">
               {title}
               
           </td>
-          <td className="whitespace-normal hidden md:table-cell px-3 py-4 text-xl text-gray-700 truncate">
+          <td className="whitespace-normal hidden lg:table-cell px-3 py-4 text-lg text-gray-700 truncate">
             {location}
             </td>
-           <td className="whitespace-normal hidden lg:table-cell px-3 py-4 text-xl text-gray-700 truncate">{date}</td>          
-          <td className="whitespace-normal hidden lg:table-cell px-3 py-4 text-xl text-gray-700 truncate">{duration}</td> 
+           <td className="whitespace-normal hidden lg:table-cell px-3 py-4 text-lg text-gray-700 truncate">{date}</td>          
+          <td className="whitespace-normal hidden lg:table-cell px-3 py-4 text-lg text-gray-700 truncate">{duration}</td> 
         </tr>
                   )})}        
         </tbody>
