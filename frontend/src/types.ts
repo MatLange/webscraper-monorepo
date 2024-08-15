@@ -1,4 +1,4 @@
-export type Book = {
+export type Job = {
   websiteid: string | null;
   title: string | null;
   baseUrl: string | null;
