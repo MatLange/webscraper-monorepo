@@ -1,18 +1,9 @@
 import {
-  MagnifyingGlassIcon,
   ChevronUpDownIcon,
 } from "@heroicons/react/24/outline";
 import {
-  Card,
-  CardHeader,
-  Input,
   Typography,
-  Button,
   CardBody,
-  CardFooter,
-  Tabs,
-  TabsHeader,
-  Tab
 } from "@material-tailwind/react";
 import type { Job } from '../types'
 
@@ -20,56 +11,13 @@ type Props = {
   jobs: Job[]
 }
 
-const TABS = [
-  {
-    label: "All",
-    value: "all",
-  },
-  {
-    label: "Older than 2 weeks",
-    value: "older",
-  },
-  {
-    label: "Newest",
-    value: "newest",
-  },
-];
- 
+
 const TABLE_HEAD = ["No.", "Title", "Location", "Date", "Duration"];
 
 const List = ({ jobs }: Props) => {
 
      return (
-       <Card className="h-full w-full">
-        <CardHeader floated={false} shadow={false} className="rounded-none mt-0 mx-0">
-          <div className="mb-8 flex items-center justify-between gap-8">
-            <div>
-              <Typography variant="h5" color="blue-gray">
-                List of found jobs
-              </Typography>
-              <Typography color="gray" className="mt-1 font-normal">
-                See information about all jobs
-              </Typography>
-            </div>
-          </div>
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <Tabs value="all" className="w-full md:w-max">
-              <TabsHeader>
-                {TABS.map(({ label, value }) => (
-                  <Tab key={value} value={value}>
-                    &nbsp;&nbsp;{label}&nbsp;&nbsp;
-                  </Tab>
-                ))}
-              </TabsHeader>
-            </Tabs>
-            <div className="w-full md:w-72">
-              <Input
-                label="Search"
-                icon={<MagnifyingGlassIcon className="h-5 w-5" />}
-              />
-            </div>
-          </div>
-        </CardHeader>
+
         <CardBody className="px-0"> 
           <table className="w-full divide-y divide-gray-300">
           <thead className="border-0">
@@ -202,20 +150,6 @@ const List = ({ jobs }: Props) => {
             </tbody> */}
           </table>
          </CardBody>
-        <CardFooter className="sticky bottom-0 flex items-center justify-between border-t border-blue-gray-50 bg-white p-4">
-          <Typography variant="small" color="blue-gray" className="font-normal">
-            Page 1 of 10
-          </Typography>
-          <div className="flex gap-2">
-            <Button variant="outlined" size="sm">
-              Previous
-            </Button>
-            <Button variant="outlined" size="sm">
-              Next
-            </Button>
-          </div>
-        </CardFooter>
-      </Card> 
     ); 
 }
 

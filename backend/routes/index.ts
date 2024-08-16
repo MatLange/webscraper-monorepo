@@ -14,8 +14,22 @@ dotenv.config({ path: ".env.local" });
 
 const table_websites = "websites";
 const table_websitedata = "websitedata";
+const table_jobdata = "websitedata";
 
 var router = Express.Router();
+
+async function readJobData() {
+  try {
+    // Select all existing data from the table
+    let { data, error: selectError } = await supabase
+      .from(`${table_jobdata}`)
+      .select();
+    if (selectError) throw selectError;
+    return data;
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
 
 async function readData() {
   try {
@@ -82,8 +96,9 @@ router.get(
     // Wrap the async code in an IIFE (Immediately Invoked Function Expression)
     (async () => {
       try {
-        const websites = (await readData()) || [];
-        const data = await scrapeWebsites(websites, req, res, next);
+        const data = (await readJobData()) || [];
+        //const data = await scrapeWebsites(websites, req, res, next);
+        
         res.json({ message: "Data fetched successfully", data: data });
 
       } catch (err) {
