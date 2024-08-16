@@ -18,12 +18,20 @@ const table_jobdata = "websitedata";
 
 var router = Express.Router();
 
-async function readJobData() {
+async function readJobData(page:any, limit:any, maxItems: any  ) {
+  const start = (page> 0) ? (page - 1) * limit : 0;
+  const end = (page> 0) ? Math.min(start + limit - 1, (maxItems || 1) - 1) : 0;
   try {
     // Select all existing data from the table
-    let { data, error: selectError } = await supabase
+    let { data, error: selectError } = 
+    (page > 0) ? await supabase
       .from(`${table_jobdata}`)
-      .select();
+      .select()
+      .range(start, end) 
+      :
+      await supabase
+      .from(`${table_jobdata}`)
+      .select();      
     if (selectError) throw selectError;
     return data;
   } catch (error) {
@@ -32,6 +40,7 @@ async function readJobData() {
 }
 
 async function readData() {
+  
   try {
     // Select all existing data from the table
     let { data, error: selectError } = await supabase
@@ -96,9 +105,11 @@ router.get(
     // Wrap the async code in an IIFE (Immediately Invoked Function Expression)
     (async () => {
       try {
-        const data = (await readJobData()) || [];
+        const page  = parseInt(req?.query?.page + "") || 0;
+        const limit  = parseInt(req?.query?.limit + "") || 0;
+        const maxItems = parseInt(req?.query?.maxItems + "") || 0;
+        const data = (await readJobData(page, limit, maxItems)) || [];
         //const data = await scrapeWebsites(websites, req, res, next);
-        
         res.json({ message: "Data fetched successfully", data: data });
 
       } catch (err) {

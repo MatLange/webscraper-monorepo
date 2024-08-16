@@ -12,7 +12,9 @@ function App() {
   const [jobs, setJobs] = useState<Job[]>([])
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [error, setError] = useState<any | null>(null);
+  const [maxItems, setMaxItems] = useState(29);
+
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -22,13 +24,14 @@ function App() {
         const response = await axios.get('http://localhost:3000', {
           params: {
             page: currentPage,
-            limit: itemsPerPage
+            limit: itemsPerPage,
+            maxItems: maxItems
           },
           timeout: 5000, // 5 seconds timeout
           cancelToken: source.token
         });
         setJobs(response.data?.data || []);
-      } catch (err: any) {
+      } catch (err: unknown | any) {
         if (axios.isCancel(err)) {
           console.log('Request canceled', err.message);
         } else if (err.response) {
@@ -54,17 +57,13 @@ function App() {
     };
   }, [currentPage, itemsPerPage]);
 
-  const totalPages = Math.ceil((jobs || []).length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
-  const currentJobs = jobs.slice(startIndex, endIndex);
-
 
    return (
     <Card className="h-full w-full">    
     <Header />
-    <List jobs={currentJobs} />
-    <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} postsPerPage={10} jobs={jobs} />
+    {error && <div className="error">{error}</div>}
+    <List jobs={jobs} />
+    <Pagination setCurrentPage={setCurrentPage} currentPage={currentPage} postsPerPage={10} maxItems={maxItems} />
     </Card> 
   ); 
 
