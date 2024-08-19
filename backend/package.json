@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www.ts",
+    "start": "ts-node ./bin/www.ts",
     "dev": "nodemon",
-    "build": "tsc && node ./bin/www.ts",
-    "build:prod": "tsc && node ./bin/www.ts",
+    "build": "tsc && ts-node ./bin/www.ts",
+    "build:prod": "tsc && ts-node ./bin/www.ts",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --fix"
   },

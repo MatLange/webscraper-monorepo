@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import type { AxiosError } from 'axios';
 import List from './components/List';
 import type { Job } from './types';
 import Header from './components/Header';
@@ -11,8 +12,8 @@ import {
 function App() {
   const [jobs, setJobs] = useState<Job[]>([])
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(10);
-  const [maxItems, setMaxItems] = useState(29);
+  const [itemsPerPage] = useState(10);
+  const [maxItems] = useState(50);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -31,22 +32,24 @@ function App() {
           cancelToken: source.token
         });
         setJobs(response.data?.data || []);
-      } catch (err: unknown | any) {
-        if (axios.isCancel(err)) {
-          console.log('Request canceled', err.message);
-        } else if (err.response) {
-          // Server responded with a status other than 200 range
-          console.error('Server Error:', err.response.status, err.response.data);
-          setError(`Server Error: ${err.response.status}`);
-        } else if (err.request) {
-          // Request was made but no response received
-          console.error('Network Error:', err.message);
-          setError('Network Error');
-        } else {
-          // Something else happened
-          console.error('Error:', err.message);
-          setError(err.message);
-        }
+      } catch (err: unknown) {
+          const error: AxiosError = err as AxiosError;
+          console.error(error.message);        
+          if (axios.isCancel(err)) {
+              console.log('Request canceled', err.message);
+          } else if (error.response) {
+              // Server responded with a status other than 200 range
+              console.error('Server Error:', error.response.status, error.response.data);
+              setError(`Server Error: ${error.response.status}`);
+          } else if (error.request) {
+              // Request was made but no response received
+              console.error('Network Error:', error.message);
+              setError('Network Error');
+          } else {
+              // Something else happened
+              console.error('Error:', error.message);
+              setError(error.message);
+          }
       }
     };
 
@@ -55,7 +58,7 @@ function App() {
     return () => {
       source.cancel('Operation canceled by the user.');
     };
-  }, [currentPage, itemsPerPage]);
+  }, [currentPage, itemsPerPage, maxItems]);
 
 
    return (

@@ -3,17 +3,17 @@ import { render, screen } from '@testing-library/react'
 
 import List from './List'
 
-const fewBooks = [
-  { id: 'asdas', title: '2001: A Space Odyssey' },
-  { id: 'asdasd', title: 'Rendezvous with Rama' },
-]
+const fewJobs = [
+  { websiteid: 'asdas', title: '2001: A Space Odyssey', baseUrl:"", url:"", location:"", date:"", duration:"" },
+  { websiteid: 'asdasd', title: 'Rendezvous with Rama', baseUrl:"", url:"", location:"", date:"", duration:""  },
+];
 
 describe('List tests', () => {
   it('Should render the list', () => {
-    render(<List books={fewBooks} />)
-    // there should be ${fewBooks.length} books in the list
-    expect(screen.getAllByRole('listitem')).toHaveLength(fewBooks.length)
+    render(<List jobs={fewJobs} />)
+    // there should be ${fewJobs.length} books in the list
+    expect(screen.getAllByRole('listitem')).toHaveLength(fewJobs.length)
     // it should render the title of the first book
-    expect(screen.getByText(fewBooks[0].title)).toBeInTheDocument()
+    expect(screen.getByText(fewJobs[0].title)).toBeInTheDocument()
   })
 })
