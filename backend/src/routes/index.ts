@@ -110,7 +110,8 @@ router.get(
         const maxItems = parseInt(req?.query?.maxItems + "") || 0;
         const data = (await readJobData(page, limit, maxItems)) || [];
         //const data = await scrapeWebsites(websites, req, res, next);
-        res.json({ message: "Data fetched successfully", data: data });
+        //res.json();
+        res.status(200).send({ message: "Data fetched successfully", data: data });
 
       } catch (err) {
         console.error("Error fetching data:", err);

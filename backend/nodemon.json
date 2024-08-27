@@ -2,5 +2,5 @@
     "watch": ["src", "routes", "models", "config"],
     "ext": "ts,js,json",
     "ignore": ["dist", "node_modules"],
-    "exec": "ts-node ./bin/www.ts"
+    "exec": "ts-node ./src/index.ts"
   }
