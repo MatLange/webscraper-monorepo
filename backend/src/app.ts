@@ -3,6 +3,7 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import cors from 'cors';  
+import dotenv from "dotenv";
 import createError from 'http-errors';
 import path from 'path';
 import cookieParser from 'cookie-parser'; 
@@ -11,6 +12,11 @@ import { errorHandler } from './middleware/errorHandler';
 import { NotFoundError } from './errors/notFoundError';
 import { indexRouter } from './routes/index';
 import { usersRouter } from './routes/users';
+
+// Load environment variables from .env.local file
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({ path: ".env.local" });
+}
 
 const app = express();
 // Use the CORS middleware
@@ -27,7 +33,7 @@ app.use(json());
 app.use(
   cookieSession({
     signed: false,
-    secure: process.env.NODE_ENV !== 'test'
+    secure: process.env.NODE_ENV !== 'development'
   })
 );
 // view engine setup

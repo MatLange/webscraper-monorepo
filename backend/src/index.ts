@@ -3,6 +3,12 @@ import mongoose from "mongoose";
 import { app } from "./app";
 import debug from "debug";
 import http from "http";
+import dotenv from "dotenv";
+
+// Load environment variables from .env.local file
+if (process.env.NODE_ENV === 'development') {
+  dotenv.config({ path: ".env.local" });
+}
 
 const debugLogger = debug("expressjs-postgresql:server");
 

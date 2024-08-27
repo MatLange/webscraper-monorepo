@@ -10,7 +10,9 @@ import { extractJobItems } from "../extractor/itemextractor";
 import supabase from "../middleware/supabaseClient";
 
 // Load environment variables from .env.local file
-dotenv.config({ path: ".env.local" });
+if (process.env.NODE_ENV !== 'production') {
+  dotenv.config({ path: ".env.local" });
+}
 
 const table_websites = "websites";
 const table_websitedata = "websitedata";

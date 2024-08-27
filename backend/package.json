@@ -4,12 +4,14 @@
   "private": true,
   "scripts": {
     "start": "ts-node ./src/index.ts",
+    "start:prod": "NODE_ENV=production && ts-node ./src/index.ts",
     "dev": "nodemon",
     "build": "tsc && ts-node ./src/index.ts",
-    "build:prod": "tsc && ts-node ./src/index.ts",
+    "build:prod": "NODE_ENV=production && tsc && ts-node ./src/index.ts",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --fix",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "test:prod": "NODE_ENV=production && jest --watchAll"
   },
   "dependencies": {
     "@jest/globals": "^29.7.0",
@@ -24,6 +26,7 @@
     "cookie-parser": "~1.4.4",
     "cookie-session": "^2.1.0",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "debug": "~2.6.9",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
