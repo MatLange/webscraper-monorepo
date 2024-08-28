@@ -7,7 +7,7 @@
     "start:prod": "NODE_ENV=production && ts-node ./src/index.ts",
     "dev": "nodemon",
     "build": "tsc && ts-node ./src/index.ts",
-    "build:prod": "NODE_ENV=production && tsc && ts-node ./src/index.ts",
+    "build:prod": "NODE_ENV=production && tsc",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --fix",
     "test": "jest --watchAll",
