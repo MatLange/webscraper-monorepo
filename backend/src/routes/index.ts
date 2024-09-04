@@ -37,7 +37,7 @@ async function readJobData(page:any, limit:any, maxItems: any  ) {
     if (selectError) throw selectError;
     return data;
   } catch (error) {
-    console.error("Error:", error);
+    //console.error("Error:", error);
   }
 }
 
@@ -52,7 +52,7 @@ async function readData() {
     if (selectError) throw selectError;
     return data;
   } catch (error) {
-    console.error("Error:", error);
+    //console.error("Error:", error);
   }
 }
 
@@ -65,7 +65,7 @@ async function resetData() {
       .neq("id", 0);
     if (deleteError) throw deleteError;
   } catch (error) {
-    console.error("Error:", error);
+    //console.error("Error:", error);
   }
 }
 
@@ -90,9 +90,9 @@ async function insertData(datasets: any[]) {
     // Insert new datasets into the table
     if (insertError) throw insertError;
 
-    console.log("Data inserted successfully:", data);
+    //console.log("Data inserted successfully:", data);
   } catch (error) {
-    console.error("Error:", error);
+    //console.error("Error:", error);
   }
 }
 
