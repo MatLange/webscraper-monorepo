@@ -10,8 +10,8 @@
     "build:prod": "cross-env NODE_ENV=production && tsc",
     "lint": "eslint . --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --fix",
-    "test": "jest --watchAll",
-    "test:prod": "cross-env NODE_ENV=production && jest --watchAll"
+    "test": "jest --watchAll --forceExit --runInBand --colors --logHeapUsage",
+    "test:prod": "cross-env NODE_ENV=production && jest --forceExit --runInBand --colors --logHeapUsage"
   },
   "dependencies": {
     "@jest/globals": "^29.7.0",
