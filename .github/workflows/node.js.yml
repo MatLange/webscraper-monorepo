@@ -42,6 +42,11 @@ jobs:
         npm run build:prod
 
     - name: Run tests
+      env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+          JWT_KEY: ${{ secrets.JWT_KEY }}
+          PORT: ${{ secrets.PORT }}    
       run: |
         cd backend
         npm run test:prod
