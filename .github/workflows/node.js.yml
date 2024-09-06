@@ -71,4 +71,4 @@ jobs:
           --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/express-app:${{ github.sha }} \
           --platform managed \
           --region ${{ secrets.GCP_REGION }} \
-          --allow-unauthenticated        
+          --allow-unauthenticated
