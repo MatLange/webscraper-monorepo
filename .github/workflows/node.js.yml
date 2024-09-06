@@ -95,8 +95,4 @@ jobs:
           GCP_PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}          
           GCP_REGION: ${{ secrets.GCP_REGION }}          
-      run: gcloud run deploy express-app \
-          --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/express-app:${{ github.sha }} \
-          --platform managed \
-          --region ${{ secrets.GCP_REGION }} \
-          --allow-unauthenticated 
+      run: gcloud run deploy express-app --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/express-app:${{ github.sha }} --platform managed --region ${{ secrets.GCP_REGION }} --allow-unauthenticated 
