@@ -50,6 +50,9 @@ jobs:
       run: |
         cd backend
         npm run test:prod
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1        
         
     - name: Build the Docker image
       env:
