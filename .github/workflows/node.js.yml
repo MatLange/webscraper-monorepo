@@ -48,7 +48,6 @@ jobs:
           JWT_KEY: ${{ secrets.JWT_KEY }}
           PORT: ${{ secrets.PORT }}    
       run: |
-        cd backend
         npm run test:prod
 
     - name: Set up Docker Buildx
@@ -64,7 +63,6 @@ jobs:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           GCP_REGION: ${{ secrets.GCP_REGION }}
       run: |
-        cd backend
         docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/express-app:${{ github.sha }} .
 
     - name: Authenticate to Google Cloud
@@ -82,7 +80,6 @@ jobs:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           GCP_REGION: ${{ secrets.GCP_REGION }}          
       run: |
-        cd backend
         gcloud auth configure-docker
 
     - name: Push the Docker image
@@ -95,7 +92,6 @@ jobs:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
           GCP_REGION: ${{ secrets.GCP_REGION }}          
       run: |
-        cd backend
         docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/express-app:${{ github.sha }}
 
     - name: Deploy to Cloud Run
@@ -108,7 +104,6 @@ jobs:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}          
           GCP_REGION: ${{ secrets.GCP_REGION }}          
       run: |
-        cd backend
         gcloud run deploy express-app \
           --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/express-app:${{ github.sha }} \
           --platform managed \
