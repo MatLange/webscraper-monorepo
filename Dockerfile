@@ -12,10 +12,10 @@ COPY package*.json ./
 RUN npm install --production
 
 # Copy local code to the container image.
-COPY ./dist ./dist
+COPY ./ ./
 
 # Expose the port the app runs on.
-EXPOSE 8080
+#EXPOSE 8080
 
 # Run the web service on container startup.
 CMD [ "npm", "start:prod" ]
