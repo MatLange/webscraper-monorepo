@@ -18,4 +18,4 @@ COPY ./ ./
 #EXPOSE 8080
 
 # Run the web service on container startup.
-CMD [ "npm", "start:prod" ]
+CMD ["npm", "run", "start:prod"]
