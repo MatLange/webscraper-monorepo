@@ -15,7 +15,7 @@ RUN npm install --production
 COPY ./ ./
 
 # Expose the port the app runs on.
-#EXPOSE 8080
+EXPOSE 8080
 
 # Run the web service on container startup.
 CMD ["npm", "run", "start:prod"]
