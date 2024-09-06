@@ -45,8 +45,8 @@ const start = async () => {
    * Get port from environment and store in Express.
    */
 
-  const port = normalizePort(process.env.PORT || "8080");
-  app.set("port", port);
+  const port = normalizePort(process.env.PORT || "3000");
+  app.set("port", 8080);
  
   /**
    * Normalize a port into a number, string, or false.
